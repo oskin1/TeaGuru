@@ -21,13 +21,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@y$z6$ic(s568g06h@qmv3%c=voe1=_m^3s$vwxbh4)m_x*j$t'
+SECRET_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # ENABLE CACHE AND COMPRESSORS IN PRODUCTION!
 DEBUG = False
 
-ALLOWED_HOSTS = [u'teaguru.me', u'www.teaguru.me']
+ALLOWED_HOSTS = [u'xxxxxxx', u'xxxxxxx']
 
 CART_SESSION_ID = 'cart'
 
@@ -163,9 +163,9 @@ WSGI_APPLICATION = 'teaguru.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dbteaguru2',
-        'USER': 'guruadmin2',
-        'PASSWORD': 'O39715003971500s',
+        'NAME': 'xxxxxxxx',
+        'USER': 'xxxxxxxx',
+        'PASSWORD': 'xxxxxxxx',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -213,11 +213,11 @@ USE_TZ = True
 
 #Ya.Money
 YANDEX_MONEY_DEBUG = False
-YANDEX_MONEY_SCID = 90154
-YANDEX_MONEY_SHOP_ID = 120091
-YANDEX_MONEY_SHOP_PASSWORD = 'O39715003971500s'
-YANDEX_MONEY_FAIL_URL = 'https://teaguru.me/payment/fail-payment/'
-YANDEX_MONEY_SUCCESS_URL = 'https://teaguru.me/payment/success-payment/'
+YANDEX_MONEY_SCID = 0000000
+YANDEX_MONEY_SHOP_ID = 0000000
+YANDEX_MONEY_SHOP_PASSWORD = 'xxxxxxxxxxxx'
+YANDEX_MONEY_FAIL_URL = 'xxxxxxxxxxxx'
+YANDEX_MONEY_SUCCESS_URL = 'xxxxxxxxxxxxxxx'
 YANDEX_MONEY_MAIL_ADMINS_ON_PAYMENT_ERROR = True
 
 class PAYMENT_TYPE:
@@ -263,7 +263,7 @@ MEDIA_URL = '/media/'
 #mail settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' 
 
-EMAIL_HOST = 'smtp.jino.ru'
+EMAIL_HOST = 'xxxxxxxx'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'mailer@teaguru.me'
-EMAIL_HOST_PASSWORD = 'O39715003971500s'
+EMAIL_HOST_USER = 'xxxxxxxxxxxxxxxxxx'
+EMAIL_HOST_PASSWORD = 'xxxxxxxxxxxx'
