@@ -1,0 +1,25 @@
+{% block subject %}
+Заказ в магазине Чайный Гуру.
+{% endblock %}
+{% block html %}
+<p>Здравствуйте, {{ name }}!</p>
+<p>Ваш заказ принят, номер заказа: <b>{{ order_id }}</b></p>
+<p>В скором времени с Вами свяжется наш менеджер для уточнения деталей заказа.</p>
+<p>Благодарим Вас за заказ!</p>
+<p>Детали заказа:</p>
+<table style="text-align:left;padding:3px;border:1px solid #555">
+<tr><th>Название</th><th>Количество</th><th>Стоимость позиции</th></tr>
+{% for i in items %}
+{% with p=i.product %}
+<tr><td>{{ p.name }}</td><td>{{ i.quantity }}</td><td>{{ i.price }}</td></tr>
+{% endwith %}
+{% endfor %}
+{% for svs in services %}
+{% with s=svs.service %}
+<tr><td>{{ s.name }}</td><td>{{ svs.quantity }}</td><td>{{ svs.price }}</td></tr>
+{% endwith %}
+{% endfor %}
+</table>
+<p>Сумма заказа: {{ total }}</p>
+<p>По всем вопросам, касающимся заказа обращайтесь по номеру:</br><b>8 495 203 97 95</b></p>
+{% endblock %}

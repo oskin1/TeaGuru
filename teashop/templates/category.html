@@ -1,0 +1,256 @@
+{% extends 'generic.html' %}
+
+{% block meta %}
+<meta name="keywords" content="{% if category.meta_kwds %}{{ category.meta_kwds }}{% else %}{{ common.keywords_meta }}{% endif %}">
+<meta name="description" 
+content="{% if category.meta_descr %}{{ category.meta_descr }}{% else %}Чай от Чайного Гуру отобран и опробован нами лично. Наша миссия — удовольствие гостя от чая. Правильные цены на правильный чай!{% endif %}">
+<!-- OG markup -->
+<meta property="og:locale" content="ru_RU" />
+<meta property="og:type" content="object" />
+<meta property="og:title" content="Купить {{ category.title|lower }} — teaguru.me" />
+<meta property="og:description" 
+content="{% if category.meta_descr %}{{ category.meta_descr }}{% else %}Чай от Чайного Гуру отобран и опробован нами лично. Наша миссия — удовольствие гостя от чая. Правильные цены на правильный чай!{% endif %}" />
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:site_name" content="Чайный Гуру" />        
+<!-- /OG markup -->
+{% endblock %}
+{% block title %}
+<title>Купить {{ category.title|lower }} — teaguru.me</title>
+{% endblock %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_category.css"/>
+{% endblock %}
+{% block content %}
+
+<div class="m-content center">
+    <div class="breadcrumb">
+		<div>
+			<a href="{% url 'teashop:Index' %}" class="underline">Главная</a>
+		</div>
+		{% if category.level == 1 %}
+		<div>
+			<a class="now">{{ category.name }}</a>
+		</div>
+		{% elif category.level == 2 %}	
+		<div>
+			<a href="{% url 'teashop:CategoryView' category.parent.slug %}" class="underline">{{ category.parent.name }}</a>
+		</div>
+		<div>
+			<a class="now">{{ category.name }}</a>
+		</div>		
+		{% else %}
+		<div>
+			<a href="{% url 'teashop:CategoryView' category.parent.parent.slug %}" class="underline">{{ category.parent.parent.name }}</a>
+		</div>		
+		<div>
+			<a href="{% url 'teashop:CategoryView' category.parent.slug %}" class="underline">{{ category.parent.name }}</a>
+		</div>
+		<div>
+			<a class="now">{{ category.name }}</a>
+		</div>
+		{% endif %}					
+    </div>
+</div>
+<h1 class="c-title center">{{ category.title }}</h1>
+
+<div class="m-content catalog">
+	<div class="controls col-100">
+		<div class="left-col col-20">
+			<div class="limit stem fltr col-100">
+				<span>Фильтры: <i class="fa fa-sliders fa-lg" aria-hidden="true"></i></span>
+    			<a id="reset" style="display:none">очистить всё<div class="delete"></div></a>
+			</div>
+		</div>
+		<div class="right-col col-78 col-offset-2">
+			<div class="limit stem">
+				<span>Выводить:</span>
+				<div class="selector">
+        			<div class="current" style="width: 120px;">
+        			    30 товаров
+        			</div>
+        			<div class="sel" style="width: 120px;">
+        				<a class="lim active" data-limit="30">30 товаров</a>
+        				<a class="lim" data-limit="60">60 товаров</a>
+        				<a class="lim" data-limit="90">90 товаров</a>
+    				</div>
+				</div>
+			</div>
+			<div class="sort stem">
+				<span>Сортировать:</span>
+				<div class="selector">
+        			<div class="current" style="width: 170px;">
+        			    По умолчанию
+        			</div>
+        			<div class="sel" style="width: 170px;">
+                		<a class="ctrl active" href="{% url 'teashop:CategoryView' category.slug %}">По умолчанию</a>
+                		<a class="ctrl" data-sort="price" data-order="DESC"
+                		href="{% url 'teashop:CategoryView' category.slug %}?sort=price&order=DESC">
+                			Убыванию цены
+                		</a>
+                		<a class="ctrl"  data-sort="price" data-order="ASC"
+                		href="{% url 'teashop:CategoryView' category.slug %}?sort=price&order=ASC">
+                			Возрастанию цены
+                		</a>
+    				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="goods col-100">
+		<div class="left-col col-20 filters">
+		    {% for facet in facets.facets %}
+			<div class="filter-box">
+				<div class="heading">
+					<span>{{ facet.name }}</span>
+				</div>
+				<div class="scrollable">
+				{% for t in facet.tags.all %}
+				<div class="option" data-checked="0">
+					<input type="checkbox" value="{{ t.id }}"/>
+					<label>{{ t.name }}</label>
+				</div>
+				{% endfor %}
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		<div id="product-list"> 
+    		<div class="right-col col-78 col-offset-2">
+    			{% for p in products %}
+    			<div class="product-box" itemscope itemtype="http://schema.org/Product">
+    				<div class="product" data-id="{{ p.id }}" data-name="{{ p.name }}" 
+    				data-price="{{ p.get_full_price|floatformat:0 }}"
+    				data-category="{% for c in p.category.all %}{% if c.level is 1 %}{{ c.name }}{% elif c.level is 2 or 3 %}/{{ c.name }}{% endif %}{% endfor %}">
+    					<a href="{% url 'teashop:ProductView' category.slug p.slug %}">
+    					<!--<img src="/media/{{ p.preview }}" class="pvw" />-->
+    					{% for i in p.images.all|slice:':1' %}
+    					<img itemprop="image" src="/media/{{ i.image }}" alt="{{ p.name }}" style="display:none"/>
+    					<div class="p-img pvw" style="background-image:url('/media/{{ i.image }}')">
+                            {% if p.awards %}
+                            <div class="awards taleft">
+                                {% for a in p.awards.all %}
+                                <div class="award stem center" itemprop="award" style="background-color:{{ a.color }};">
+                                <i class="fa fa-{{ a.icon }}" aria-hidden="true" style="margin: 0 5px 0 0"></i>    
+                                {{ a.name }}</div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}    					    
+    					</div>
+    					{% endfor %}
+    					<h2 itemprop="name">{{ p.name }}</h2></a>
+    					<p itemprop="description" class="brief">{{ p.brief }}</p>
+                        <div class='rating-box' style="display:none" itemprop="aggregateRating"
+                        itemscope itemtype="http://schema.org/AggregateRating">
+                            {% if p.rating is 0 %}
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <meta itemprop="ratingValue" content="0">
+                            {% elif p.rating is 1 %}
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <meta itemprop="ratingValue" content="1">
+                            {% elif p.rating is 2 %}
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <meta itemprop="ratingValue" content="2">
+                            {% elif p.rating is 3 %}
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <meta itemprop="ratingValue" content="3">
+                            {% elif p.rating is 4 %}
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                            <meta itemprop="ratingValue" content="4">
+                            {% elif p.rating is 5 %}
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <meta itemprop="ratingValue" content="5">
+                            {% endif %}
+                        </div>    					
+    					<div class="pricing center" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    						{% if p.discount %}
+    						<p class="price old">{{ p.get_full_price|floatformat:0 }}</p>
+    						<p class="price">{{ p.get_full_discount|floatformat:0 }} {{ common.currency }}</p>
+    						<meta itemprop="price" content="{{ p.get_full_discount|floatformat:0 }}">
+    						{% else %}
+    						<p class="price">{{ p.get_full_price|floatformat:0 }} {{ common.currency }}</p>
+    						<meta itemprop="price" content="{{ p.get_full_price|floatformat:0 }}">
+    						{% endif %}
+    						<meta itemprop="priceCurrency" content="RUR">
+    						<p class="netto center">за {{ p.netto }}{% if p.unit == 'wt' %}шт.{% else %}гр.{% endif %}</p>
+    					</div>
+    					<form action="{% url 'cart:CartAdd' p.id %}" method="post" class="add">
+    						{% if p.unit == 'wt' %}
+    						{{ cart_product_form_1 }}
+    						{% else %}
+    						{{ cart_product_form_10 }}
+    						{% endif %}
+    						{% csrf_token %}
+    						<button class="subm" type="submit" value="Добавить в корзину">Добавить в корзину</button>
+    					</form>
+    				</div>  
+    			</div>
+    			{% endfor %}  
+    		</div>
+    		<div class="pagination col-78 col-offset-2">
+    			<div class="pagin stem">
+    				{% if products.has_previous %}
+    				<a class="pn arrow" data-page="{{ products.previous_page_number }}" href="?page={{ products.previous_page_number }}">Назад</a>
+    				{% endif %}
+    				{% for num in products.paginator.page_range %}
+    					{% if num == products.number %}
+    						<a class="pn active"><b>{{ num }}</b></a>
+    					{% else %}
+    						<a class="pn" data-page="{{ num }}" href="?page={{ num }}"> {{ num }}</a>
+    					{% endif %} 
+    				{% endfor %}
+    				{% if products.has_next %}
+    				<a class="pn arrow" data-page="{{ products.next_page_number }}" href="?page={{ products.next_page_number }}">Вперёд</a>
+    				{% endif %}
+    			</div>	
+    		</div>	
+		</div>
+    		<div class="limitation col-23 col-offset-2">
+    			<div class="limit stem">
+    				<span>Выводить:</span>
+    				<div class="selector">
+            			<div class="current" style="width: 120px;">
+            			    30 товаров
+            			</div>
+            			<div class="sel" style="width: 120px;">
+            				<a class="lim active" data-limit="30">30 товаров</a>
+            				<a class="lim" data-limit="60">60 товаров</a>
+            				<a class="lim" data-limit="90">90 товаров</a>
+        				</div>
+    				</div>
+    			</div>			
+	        </div>
+	    </div>
+	</div>
+	<div class="to-top">
+    	<div class="m-content">
+    	    <a href="#" class="control-btn-default stem" id="to-top" style="display:none">В начало <i class="fa fa-angle-up mr-0" aria-hidden="true"></i></a>
+    	</div>
+	</div>
+{% endblock %}
+{% block innerscript %}
+<!--<script type="text/javascript" src="//api.venyoo.ru/wnew.js?wc=venyoo/default/science&widget_id=5333076730970112"></script>-->
+{% endblock %}

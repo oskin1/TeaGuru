@@ -1,0 +1,51 @@
+<div class="right-col col-78 col-offset-2">
+	{% for p in products %}
+	<div class="product-box">
+		<span data-tag='{{ p.manufacturer.name }}' style="display:none"></span>
+		<div class="product">
+			<a href="{% url 'teashop:ProductView' category.slug p.slug %}">
+			<!--<img src="/media/{{ p.preview }}" class="pvw" />-->
+			{% for i in p.images.all|slice:':1' %}
+			<div class="p-img pvw" style="background-image:url('/media/{{ i.image }}')"></div>
+			{% endfor %}
+			<h1>{{ p.name }}</h1></a>
+			<p class="brief">{{ p.brief }}</p>
+			<div class="pricing center">
+				{% if p.price_discounted %}
+				<p class="price old">{{ p.get_full_price|floatformat }}</p>
+				<p class="price">{{ p.get_full_discount|floatformat }} {{ common.currency }}</p>
+				{% else %}
+				<p class="price">{{ p.get_full_price|floatformat }} {{ common.currency }}</p>
+				{% endif %}
+				<p class="netto center">за {{ p.netto }}{{ p.unit }}</p>
+			</div>
+			<form action="{% url 'cart:CartAdd' p.id %}" method="post" class="add">
+				{% if p.unit == 'шт' %}
+				{{ cart_product_form_1 }}
+				{% else %}
+				{{ cart_product_form_10 }}
+				{% endif %}
+				{% csrf_token %}
+				<button class="subm" type="submit" value="Добавить в корзину">Добавить в корзину</button>
+			</form>
+		</div>  
+	</div>
+	{% endfor %}  
+</div>
+<div class="pagination col-78 col-offset-2">
+	<div class="pagin stem">
+		{% if products.has_previous %}
+		<a class="pn arrow" data-page="{{ products.previous_page_number }}" href="?page={{ products.previous_page_number }}">Назад</a>
+		{% endif %}
+		{% for num in products.paginator.page_range %}
+			{% if num == products.number %}
+				<a class="pn active"><b>{{ num }}</b></a>
+			{% else %}
+				<a class="pn" data-page="{{ num }}" href="?page={{ num }}"> {{ num }}</a>
+			{% endif %} 
+		{% endfor %}
+		{% if products.has_next %}
+		<a class="pn arrow" data-page="{{ products.next_page_number }}" href="?page={{ products.next_page_number }}">Вперёд</a>
+		{% endif %}
+	</div>	
+</div>	

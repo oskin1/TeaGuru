@@ -1,0 +1,84 @@
+{% extends "generic.html" %}
+
+{% block title %}
+  <title>Оформление заказа</title>
+{% endblock %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_cart_detail.css"/>
+{% endblock %}
+
+{% block content %}
+<div class="form" id="oform">
+  <div class="m-content">
+    <p class="center stem" style="margin-bottom:8px;"><b>1. персональные данные</b><i class="fa fa-angle-right" aria-hidden="true"></i>2. способ оплаты и доставки</p>
+    <h1>Оформление заказа</h1>
+    <div class="col-sm-50 form-box">
+      <form class="order-form" action="." method="post">
+        <div class="fields">
+        {{ form }}
+        {% csrf_token %}
+        </div>
+        <button id="continue" class="control stem fs-12 continue red" type="submit" value="Продолжить">
+            Продолжить
+            <i class="fa fa-angle-right" style="margin-right:0" aria-hidden="true"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="m-content">
+      <table class="products-list-checkout col-100">
+        <thead>
+          <tr>
+              <td class="name">Товар</td>
+              <td class="quantity">Количество</td>
+              <td class="price">Цена</td>
+          </tr>
+        </thead>
+        <tbody>
+        {% for item in cart %}
+            {% with prod=item.product %} 
+            <tr data-prod-id="{{ prod.id }}">
+              <td class="name">
+                    <a href="{% url 'teashop:ProductIntView' prod.slug %}">
+        				{% for i in prod.images.all|slice:':1' %}
+        				<div class="p-img" style="background-image:url('/media/{{ i.image }}')"></div>
+        				{% endfor %}
+                    </a>
+                  <h3>{{ prod.name }}</h3>
+                  {{ prod.brief }}
+              </td>
+              <td class="quantity">
+                  <div class="qty">
+                      {{ item.quantity }}
+                  </div>
+              </td>
+              <td class="price">{{ item.total_price|floatformat:"2" }}<em class="currency">{{ common.currency }}</em></td>
+          </tr>
+          {% endwith %}
+        {% endfor %}
+        </tbody>
+      </table>
+      <div class="total-box col-100">
+          <div class="total">
+              <div class="col-100 sum stem fs-12">
+                  <div class="col-47">Всего:</div>
+                  <div class="col-50 col-offset-3 taright price">{{ cart.get_total_price|floatformat:"2" }} {{ common.currency }}</div>
+              </div>
+              {% if cart.cupon %}
+              <div class="col-100 final stem fs-12 black">
+                  <div class="col-47 bold">Сумма со скидкой:</div>
+                  <div class="col-50 col-offset-3 taright price">{{ cart.get_total_price_after_discount|floatformat:"2" }} {{ common.currency }}</div>                  
+              </div>
+              {% endif %}
+          </div>
+      </div>      
+</div>
+{% endblock %}
+
+{% block innerscript %}
+<script src="/static/js/common/jquery.inputmask.bundle.min.js"></script>
+<script type="text/javascript">
+$('input[type="tel"]').inputmask('9(999)999-99-99');
+</script>
+{% endblock %}

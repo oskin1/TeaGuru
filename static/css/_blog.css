@@ -1,0 +1,188 @@
+.blog{
+    padding: 0;
+    padding-top: 45px;
+}
+.content{
+    background: #fff;
+}
+.tags{
+    padding: 12px;
+    margin-bottom: 22px;
+}
+.tags .tag{
+    display: inline-block;
+    padding: 4px 6px;
+    margin-right: 4px;
+    border-radius: 2px;
+    background: rgba(230, 177, 177, 0.18);
+    color: #444;
+}
+h2{
+    font-size: 20pt;
+    padding: 0;
+}
+.post{
+    float: left;
+    width: calc(33.333% - 24px);
+    height: 400px;
+    margin: 0 12px 24px 12px;
+    color: #444;
+}
+.post span{
+    display: block;
+    margin-top: 12px;
+}
+.post h2{
+    padding: 8px 0 4px 0;
+    font-size: 20pt;
+    color: #111;
+}
+.post .img{
+    background-size: cover;
+    width: 100%;
+    height: 240px;
+}
+.post .img div{
+    width: 100%;
+    height: 100%;
+    padding-top: 108px;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: opacity ease 0.15s;
+}
+.post:hover .img div{
+    opacity: 1;
+}
+.post .img div p{
+    text-align: center;
+    font-size: 14pt;
+    color: #fff;
+}
+.read-area{
+    width: 60%;
+    margin: 0 20%;
+    margin-top: -260px;
+    background: #fff;
+    padding: 40px 45px;
+}
+.read-area span{
+    display: block;
+    margin: 4px 0;
+}
+span.date{
+    color: #777;
+    font-size: 11pt;
+    margin: 0 0 24px 0;
+}
+.text-body{
+    font-family: "Proxima Nova", Tahoma, Serif, Arial;
+}
+.text-body img{
+    margin-top: 32px !important;
+}
+.text-body h6{
+    text-align: center !important;
+}
+.text-body p{
+    margin-bottom: 12px;
+    font-family: "Proxima Nova", Tahoma, Serif, Arial;
+    font-size: 12pt;
+}
+.preview{
+    width: calc(100% - 20px);
+    height: 500px;
+    background-size: cover;
+    margin: 0 10px;
+}
+.related{
+    margin-bottom: 62px;
+}
+.related h3{
+    font-size: 24pt;
+    padding-bottom: 22px;    
+}
+.product-box{
+    float: left;
+    width: 25%;
+    height: 370px;
+    position: relative;
+}
+@media screen and (max-width: 1280px) {
+    .product-box{
+        height: 325px;
+    }  
+}
+.product-box .product {
+    margin: 0;
+    padding: 12px;
+    background-color: #fff;
+    transition: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 3px;
+}
+.product-box h1{
+    font-size: 18pt;
+    color: #222;
+    padding-top: 10px;
+}
+.pricing{
+    padding: 5px 0 15px 0;
+}
+.product-box p.price{
+    display: inline-block;
+    padding: 0 3px;
+    font-size: 16pt;
+    color: #000;
+}
+p.netto{
+    font-size: 11pt;
+    color: #444;
+}
+p.price.old{
+    color: #A6A6A6;
+    text-decoration: line-through;
+}
+.product-box p.brief{
+    font-family: 'Stem';
+    font-weight: 500;
+    font-size: 10pt;
+    color: #444;
+    margin-top: 8px;
+}
+.product img{
+    border-radius: 3px;
+    width: 100%;
+}
+.product .p-img{
+    border-radius: 3px;
+    width: 100%;
+    height: 210px;
+    background-size: cover;
+}
+@media screen and (max-width: 1280px){
+    .product .p-img{
+        height: 170px;
+    }    
+}
+.product .subm{
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-family: 'Stem';
+    font-size: 10pt;
+    text-transform: lowercase;
+    line-height: 16px;    
+    opacity: 0;
+    transition: all ease 0.1s;
+    background: #ecd6d6;
+    color: #501b1b;
+}
+.product .select{
+    opacity: 0;
+    transition: all ease 0.1s;
+}
+.product label{
+    display: none;
+}

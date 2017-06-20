@@ -1,0 +1,42 @@
+{% extends 'mobile/generic.html' %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_cart_detail.css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="m-content m-cart">
+        <div class="content-box">
+            {% for item in cart %}
+                {% with prod=item.product %} 
+                    <div class="item" data-prod-id="{{ prod.id }}">
+                        <a href="/cart/remove/{{ prod.id }}/?full=1"><div class="delete"></div></a>
+                        <a href="{% url 'teashop:ProductIntView' prod.slug %}">
+            				{% for i in prod.images.all|slice:':1' %}
+            				<div class="img" style="background-image:url(/media/{{ i.image }})"></div>
+            				{% endfor %}
+                        </a> 
+                        <h2>{{ prod.name }}</h2>
+                        <p class="qty">{{ item.quantity }}{{ prod.unit }}</p>
+                        <p class="pr">{{ item.total_price|floatformat:2 }} {{ common.currency }}</p>
+                    </div>
+                {% endwith %}
+            {% endfor %} 
+        </div>
+        <div class="totals">
+            <div class="total">
+                <div class="centered">
+                    <div>Сумма</div>
+                    <div>{{ cart.get_total_price|floatformat:"2" }} {{ common.currency }}</div>
+                </div>
+            </div>
+            <div class="total">
+                <div class="centered">
+                    <div>Итого</div>
+                    <div>{{ cart.get_total_price_after_discount|floatformat:"2" }} {{ common.currency }}</div>
+                </div>
+            </div>
+            </div>
+            <a href="{% url 'orders:OrderCreate' %}" class="cart-button">Оформить заказ</a>
+    </div>
+{% endblock %}

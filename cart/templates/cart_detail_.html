@@ -1,0 +1,105 @@
+{% extends 'generic.html' %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_cart_detail.css"/>
+{% endblock %}
+
+{% block content %}
+<div class="m-content co-table">
+<table class="products-list-checkout col-100">
+          <thead>
+          <tr>
+              <td class="name">Товар</td>
+              <td class="quantity">Количество</td>
+              <td class="price">Цена</td>
+              <td></td>
+          </tr>
+          </thead>
+          <tbody>
+        {% for item in cart %}
+            {% with prod=item.product %} 
+            <tr data-prod-id="{{ prod.id }}">
+              <td class="name">
+                    <a href="{% url 'teashop:ProductIntView' prod.slug %}">
+        				{% for i in prod.images.all|slice:':1' %}
+        				<div class="p-img" style="background-image:url('/media/{{ i.image }}')"></div>
+        				{% endfor %}
+                    </a>
+                  <h3>{{ prod.name }}</h3>
+                  {{ prod.brief }}
+              </td>
+              <td class="quantity">
+                  <div class="spinCtrl">
+                      <form action="{% url "cart:CartAdd" prod.id %}" method="post" class="add initial stem change-q">
+                        {% if prod.unit == 'wt' %}
+                        {{ item.update_quantity_form_1.as_p }}
+                        {% else %}
+                        {{ item.update_quantity_form_10.as_p }}
+                        {% endif %}
+                        {% csrf_token %}
+                      </form>
+                  </div>
+              </td>
+              <td class="price">{{ item.total_price|floatformat:2 }}<em class="currency">{{ common.currency }}</em></td>
+              <td><a href="{% url 'cart:CartRemove' prod.id %}?full=1" class="delete"></a></td>
+          </tr>
+          {% endwith %}
+        {% endfor %}
+        </tbody>
+      </table>
+      <div class="total-box col-100">
+          <div class="cupon-box col-47">
+              <form action="{% url 'cupons:apply' %}" method="POST" class="cupon col-100 stem fs-11">
+                  {{ cupon_apply_form }}
+                  {% csrf_token %}
+                  <button class="apply control" id="#cupon-apply">Применить</button>
+              </form>
+          </div>
+          <div class="total">
+              <div class="col-100 sum stem fs-12">
+                  <div class="col-47">Сумма:</div>
+                  <div class="col-50 col-offset-3 taright price">{{ cart.get_total_price|floatformat:"2" }} {{ common.currency }}</div>
+              </div>
+              <div class="col-100 final stem fs-12 black">
+                  <div class="col-47 bold">Итого:</div>
+                  <div class="col-50 col-offset-3 taright price">{{ cart.get_total_price_after_discount|floatformat:"2" }} {{ common.currency }}</div>                  
+              </div>
+          </div>
+      </div>
+      <div class="continue col-100">
+          <a href="{% url "orders:OrderCreate" %}"><button id="check-out" class="check-out col-offset-3 control red stem fs-12">Оформить заказ</button></a>
+          <a href="{% url "teashop:Index" %}"><button class="cshop control stem fs-12">Продолжить покупки</button></a>
+      </div>
+</div>
+{% endblock %}
+{% block innerscript %}
+<script type="text/javascript">
+    $('#check-out').click(function(e){
+        e.preventDefault();
+        window.dataLayer.push({
+            "ecommerce": {
+                "purchase": {
+                    "actionField": {
+                        "id" : "{{ ec_id }}",
+                        "goal_id" : "25310999"
+                    },
+                    "products": [
+                        {% for item in cart %}
+                        {% with prod=item.product %}
+                        {
+                            "id": "{{ prod.id }}",
+                            "name": "{{ prod.name }}",
+                            "price": {{ item.total_price|floatformat:0 }}.00,
+                            "category": "{% for c in prod.category.all %}{% if c.level is 1 %}{{ c.name }}{% elif c.level is 2 or 3 %}/{{ c.name }}{% endif %}{% endfor %}",
+                            "quantity": {{ cart.get_total_quantity }}
+                        },
+                        {% endwith %}
+                        {% endfor %}
+                    ]
+                }
+            }
+        });
+        $(this).unbind('click').click();
+    });
+</script>
+{% endblock %}

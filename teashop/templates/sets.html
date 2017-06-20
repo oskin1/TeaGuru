@@ -1,0 +1,68 @@
+{% extends 'generic.html' %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_index.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/partials/_pagination.css"/>
+{% endblock %}
+{% block content %}
+
+<div class="m-content center">
+    <div class="breadcrumb">
+		<div>
+			<a href="{% url 'teashop:Index' %}" class="underline">Главная</a>
+		</div>
+		<div>
+			<a class="now">Подборки</a>
+		</div>
+    </div>
+</div>
+<h1 class="c-title center">Подборки</h1>
+
+{% for set in page %}
+<div class="m-content sets" style="margin-top: 24px;">
+    <a href="{% url 'teashop:SetDetail' set.slug %}"><h2 class="col-100 center">{{ set.name }}</h2></a>
+    <div class="row col-100">
+        {% for p in set.products.all|slice:':6' %}
+        <div class="item-box">
+            <a href="{% url 'teashop:ProductIntView' p.slug %}">
+            <div class="product">
+				{% for i in p.images.all|slice:':1' %}
+				<div class="p-img pvw" style="background-image:url('/media/{{ i.image }}')"></div>
+				{% endfor %}
+				<h3 class="taleft">{{ p.name }}</h3>
+				<p class="brief taleft stem">{{ p.brief }}</p>
+				<div class="pricing taleft">
+					{% if p.price_discounted %}
+					<p class="price old">{{ p.get_full_price|floatformat }}</p>
+					<p class="price">{{ p.get_full_discount|floatformat }} {{ common.currency }}</p>
+					{% else %}
+					<p class="price">{{ p.get_full_price|floatformat }} {{ common.currency }}</p>
+					{% endif %}
+					<p class="netto">за {{ p.netto }}{{ p.unit }}</p>
+				</div>
+			</div></a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+<div class="m-content">
+	<div class="pagination col-100">
+		<div class="pagin stem">
+			{% if page.has_previous %}
+			<a class="pn arrow" data-page="{{ page.previous_page_number }}" href="?page={{ page.previous_page_number }}">Назад</a>
+			{% endif %}
+			{% for num in page.paginator.page_range %}
+				{% if num == page.number %}
+					<a class="pn active"><b>{{ num }}</b></a>
+				{% else %}
+					<a class="pn" data-page="{{ num }}" href="?page={{ num }}"> {{ num }}</a>
+				{% endif %} 
+			{% endfor %}
+			{% if page.has_next %}
+			<a class="pn arrow" data-page="{{ page.next_page_number }}" href="?page={{ page.next_page_number }}">Вперёд</a>
+			{% endif %}
+		</div>	
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+.pagination{
+    float: right;
+    margin-top: 45px;
+    border-top: 1px solid #dcdcdc;
+}
+.limitation{
+    float: right;
+    margin-top: -58px;
+    margin-right: 55%;
+}
+.limitation.full{
+    float: left;
+    margin-top: -52px;
+    margin-right: 55%;
+}
+.controls .right-col{
+    border-bottom: 1px solid #dcdcdc;
+}
+.sort, .limit, .pagin{
+    float: right;
+    color: #000;
+    padding: 11px 0;
+    line-height: 30px;  
+}
+.pagin{
+    height: 60px;
+}
+.limit{
+    float: left;
+    font-size: 11pt;
+}
+.sort a, .limit a, .pagin a{
+    font-weight: normal;
+    text-transform: lowercase;
+    padding: 0 12px;
+    border-radius: 15px;
+    color: #8F8F8F;
+    display: inline-block;
+    background: transparent;
+    transition: all ease 0.1s;
+    cursor: pointer;
+}
+.pagin a{
+    padding: 0 7px;
+}
+.pagin .arrow{
+    width: auto;
+    border-radius: 3px;
+    padding: 4px 18px;
+    background: #DBDBDB;    
+}
+.pagin .arrow:hover{
+    background: #5E6364;
+    color: #FFF 
+}
+.sort a, .limit:not(.fltr) a{
+    display: block;
+    padding: 0 10px;
+    font-size: 11pt;
+    line-height: 32px;
+    border-radius: 0;
+}
+#reset .delete{
+    margin-top: 8px;
+}
+#reset{
+    background: rgba(230, 177, 177, 0.2);
+    float: right;
+}
+.pagin a{
+    padding: 0 11px;
+    width: 30px;
+}
+.pagin a:not(.arrow){
+    margin: 0 2px;
+}
+.sort span, .filter-box .heading span, .limit span, .pagin span{
+    margin-right: 12px;
+    font-weight: 800;
+    font-size: 10pt;
+    font-family: 'Stem';
+}
+.pagin a:hover{
+    background: #DBDBDB
+}
+.sort a:hover, .limit:not(.fltr) a:hover{
+    background: rgba(230, 177, 177, 0.2);
+}
+.pagin a.active{
+    background: #5E6364;
+    color: #FFF    
+}

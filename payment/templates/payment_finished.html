@@ -1,0 +1,16 @@
+{% extends "generic.html" %}
+
+{% block title %}
+  <title>Оформление заказа</title>
+{% endblock %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_cart_detail.css"/>
+{% endblock %}
+
+{% block content %}
+<div class="m-content tnk">
+  <h1>{{ message }}</h1>
+  <p>Идентификатор вашего заказа: {{ order_id }}</p>
+  <a href="{% url "teashop:Index" %}"><button class="cshop control stem fs-12">Вернуться в магазин</button></a>
+</div>
+{% endblock %}

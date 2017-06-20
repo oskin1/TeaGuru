@@ -1,0 +1,23 @@
+{% block subject %}
+Поступил новый заказ!
+{% endblock %}
+{% block html %}
+<p>Детали заказа:</p>
+<p>Имя: {{ name }}!</p>
+<p>Телефон: <b>{{ phone }}</b></p>
+<p>Детали заказа:</p>
+<table style="text-align:left;padding:3px;border:1px solid #555">
+<tr><th>Название</th><th>Количество</th><th>Стоимость позиции</th></tr>
+{% for i in items %}
+{% with p=i.product %}
+<tr><td>{{ p.name }}</td><td>{{ i.quantity }}</td><td>{{ i.price }}</td></tr>
+{% endwith %}
+{% endfor %}
+{% for svs in services %}
+{% with s=svs.service %}
+<tr><td>{{ s.name }}</td><td>{{ svs.quantity }}</td><td>{{ svs.price }}</td></tr>
+{% endwith %}
+{% endfor %}
+</table>
+<p>Сумма заказа: {{ total }}</p>
+{% endblock %}

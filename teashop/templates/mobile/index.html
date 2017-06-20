@@ -1,0 +1,109 @@
+{% extends 'mobile/generic.html' %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/mobile/_index.css"/>
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/common/slick.min.js"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="slider col-100">
+        {% for sl in carousel.slides.all %}
+        <div class="slide col-100" style="background-image:url('media/{{ sl.background }}')">
+            <div class="billet center">
+                <h2>{{ sl.title }}</h2>
+                <p>{{ sl.subtitle }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="m-content crsl">
+        <h2 class="col-100 center">Популярные категории</h2>
+        <div class="popcat carousel col-100">
+            {% for c in popcats.category.all %}
+            <div class="card">
+                <div class="preview col-100" style="background-image:url('media/{{ c.preview }}')"></div>
+                <h3>{{ c.name }}</h3>
+            </div>                
+            {% endfor %}
+        </div>
+    </div>
+    {% for set in sets %}
+    <div class="m-content sets crsl">
+        <h2 class="col-100 center">{{ set.name }}</h2>
+        <div class="row col-100">
+            {% for p in set.products.all|slice:':6' %}
+            <div class="item-box">
+                <a href="{% url 'teashop:ProductIntView' p.slug %}">
+                <div class="product">
+					{% for i in p.images.all|slice:':1' %}
+					<div class="p-img pvw" style="background-image:url('/media/{{ i.image }}')"></div>
+					{% endfor %}
+					<h3 class="taleft">{{ p.name }}</h3>
+					<p class="brief taleft stem">{{ p.brief }}</p>
+					<div class="pricing taleft left">
+						{% if p.price_discounted %}
+						<p class="price old">{{ p.get_full_price|floatformat }}</p>
+						<p class="price">{{ p.get_full_discount|floatformat }} {{ common.currency }}</p>
+						{% else %}
+						<p class="price">{{ p.get_full_price|floatformat }} {{ common.currency }}</p>
+						{% endif %}
+						<p class="netto">за {{ p.netto }}{% if p.unit == 'wt' %}шт.{% else %}гр.{% endif %}</p>
+					</div>
+    			</div>
+    			</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+    <div class="m-content blog">
+        <h2 class="col-100 center">Блог о чае</h2>
+        <div class="row">
+            <div class="latest col-100">
+                {% for pt in posts|slice:'3' %}
+                <a href="{% url 'blog:PostDetail' pt.slug %}">
+                <div class="post">
+                    <div class="preview" style="background-image:url('media/{{ pt.preview }}')"></div>
+                    <span class="date stem">{{ pt.pub_date }}</span>
+                    <h4>{{ pt.title }}</h4>
+                    <p>{{ pt.teaser }}</p>
+                </div>
+                </a>
+                {% endfor %}
+                <a href="{% url 'blog:PostList' %}" class="blog-button stem center">Читать все статьи</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block innerscript %}
+<script>
+$(document).ready(function(){
+    $('.slider').slick({
+    	slidesToShow: 1,
+      	slidesToScroll: 1,
+    	dots: true,
+    	arrows: false,
+    	autoplay: true,
+    	autoplaySpeed: 15000,
+    });
+    $('.carousel').slick({
+    	slidesToShow: 1,
+      	slidesToScroll: 1,
+    	dots: false,
+    	arrows: false,
+    	autoplay: false,
+    }); 
+    $('.sets .row').slick({
+    	slidesToShow: 1,
+      	slidesToScroll: 1,
+    	dots: false,
+    	arrows: false,
+    	autoplay: false,
+    }); 
+});
+</script>
+{% endblock %}

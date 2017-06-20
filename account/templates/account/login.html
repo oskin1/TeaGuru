@@ -1,0 +1,26 @@
+{% extends 'generic.html' %}
+
+{% block title %}
+  <title>Панель входа</title>
+{% endblock %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_cart_detail.css"/>
+{% endblock %}
+
+{% block content %}
+<div class="form" id="oform">
+  <div class="m-content">
+    <h1>Войти</h1>
+    <div class="col-sm-40 form-box">
+      <form class="login-form" action="." method="post">
+        <div class="fields">
+        {{ form }}
+        {% csrf_token %}
+        </div>
+        <button id="continue" class="control stem fs-12 continue" type="submit" value="Продолжить">Войти<i class="fa fa-angle-right" aria-hidden="true"></i></button>
+      </form>
+    </div>
+  </div>
+  <a href="{% url 'account:account_signup' %}" class="stem signup center">Регистрация</a>
+</div>
+{% endblock %}

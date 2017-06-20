@@ -1,0 +1,25 @@
+{% extends 'generic.html' %}
+
+{% block title %}
+  <title>Панель регестрации</title>
+{% endblock %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_cart_detail.css"/>
+{% endblock %}
+
+{% block content %}
+<div class="form" id="oform">
+  <div class="m-content">
+    <h1>Зарегестрироваться</h1>
+    <div class="col-sm-40 form-box">
+      <form class="login-form" action="." method="post">
+        <div class="fields">
+        {{ form }}
+        {% csrf_token %}
+        </div>
+        <button id="continue" class="control stem fs-12 continue" type="submit" value="Продолжить">Продолжить<i class="fa fa-angle-right" aria-hidden="true"></i></button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

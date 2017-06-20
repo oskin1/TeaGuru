@@ -1,0 +1,25 @@
+{% extends "mobile/generic.html" %}
+
+{% block title %}
+  <title>Оформление заказа</title>
+{% endblock %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/mobile/_cart_detail.css"/>
+{% endblock %}
+
+{% block content %}
+<div class="form" id="oform">
+    <div class="m-content">
+        <h1>Оформление заказа</h1>
+        <div class="col-sm-50 form-box">
+          <form class="order-form opts" action="." method="post">
+            <div class="fields">
+            {{ form }}
+            {% csrf_token %}
+            </div>
+            <button class="control stem fs-12 continue red" type="submit" value="Продолжить">Продолжить<i class="fa fa-angle-right" style="margin-right:0" aria-hidden="true"></i></button>
+          </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'generic.html' %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_blog.css"/>
+{% endblock %}
+{% block content %}
+<div class="preview" style="background-image:url('/media/{{ post.preview }}')"></div>
+<div class="read-area">
+    <span class="date">{{ post.pub_date }}</span>
+    <h1>{{ post.title }}</h1>
+    <span class="author">Автор: {{ post.author }}</span>
+    <div style="padding-left:0; margin-top:12px" class="tags">
+    {% for t in post.tags.all %}
+    <a class="tag stem center" href="/blog?tag_filter={{ t.id }}">{{ t.name }}</a>
+    {% endfor %}
+    </div>
+    <div class="text-body" style="width:100%;padding-left:0;padding-right:0">{{ post.body|safe }}</div>
+</div>
+{% if post.rel_products.all|length > 0 %}
+<div class="related col-100">
+    <div class="m-content">
+        <h3 class="center">Товары из статьи:</h3>
+        {% for p in post.rel_products.all|slice:'4' %}
+    		<div class="product-box">
+    			<div class="product">
+    				<a href="{% url 'teashop:ProductIntView' p.slug %}">
+    				{% for i in p.images.all|slice:':1' %}
+    				<div class="p-img pvw" style="background-image:url('/media/{{ i.image }}')"></div>
+    				{% endfor %}
+    				<h1 class="center">{{ p.name }}</h1></a>
+    				<p class="brief center">{{ p.brief }}</p>
+    				<div class="pricing center">
+    					{% if p.price_discounted %}
+    					<p class="price old">{{ p.get_full_price|floatformat }}</p>
+    					<p class="price">{{ p.get_full_discount|floatformat }} {{ common.currency }}</p>
+    					{% else %}
+    					<p class="price">{{ p.get_full_price|floatformat }} {{ common.currency }}</p>
+    					{% endif %}
+    					<p class="netto">за {{ p.netto }}{{ p.unit }}</p>
+    				</div>
+    			</div>  
+    		</div>    
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'generic.html' %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_category.css"/>
+{% endblock %}
+{% block content %}
+
+<div class="m-content center">
+    <div class="breadcrumb">
+		<div>
+			<a href="{% url 'teashop:Index' %}" class="underline">Главная</a>
+		</div>
+		<div>
+			<a class="now">Карта сайта</a>
+		</div>
+    </div>
+</div>
+<h1 class="c-title center">Карта сайта</h1>
+<div class="m-content text-body">
+    <ul class="sitemap">
+        <li><a class="heading" href="{% url 'teashop:Index' %}">Главная</a></li>
+        {% for l in links %}
+        <li><a class="heading" href="{% url 'teashop:InfoPage' l.slug %}">{{ l.name }}</a></li>
+        {% endfor %}   
+        <li><a class="heading" href="{% url 'blog:PostList' %}">Блог</a>
+        <ul>
+        {% for p in posts %}
+            <li><a href="{% url 'blog:PostDetail' pt.slug %}">{{ p.title }}</a></li>
+        {% endfor %}
+        </ul>
+        </li>
+        {% for c in categories %}
+        {% if c.level == 1 %}
+        <li>
+            <a class="heading" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+            <ul>
+            {% for cd_1 in c.child.all %}
+                <li>
+                    <a href="{{ cd_1.get_absolute_url }}">{{ cd_1.name }}</a>
+                    <ul>
+                        {% for cd_2 in cd_1.child.all %}
+                        <a href="{{ cd_2.get_absolute_url }}">{{ cd_2.name }}</a>
+                        <ul>
+                        {% for p in cd_2.products.all %}
+                            <li><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></li>
+                        {% endfor %}
+                        </ul>
+                        {% endfor %}
+                    </ul>
+                    {% if not cd_1.check_child %}
+                        {% for p in cd_1.products.all %}
+                            <li><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></li>
+                        {% endfor %}                        
+                    {% endif %}
+                </li>
+            {% endfor %}    
+            </ul>    
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>    
+</div>
+
+{% endblock %}

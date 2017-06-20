@@ -1,0 +1,21 @@
+{% extends 'generic.html' %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_category.css"/>
+{% endblock %}
+{% block content %}
+
+<div class="m-content center">
+    <div class="breadcrumb">
+		<div>
+			<a href="{% url 'teashop:Index' %}" class="underline">Главная</a>
+		</div>
+		<div>
+			<a class="now">{{ page.name }}</a>
+		</div>
+    </div>
+</div>
+<h1 class="c-title center">{{ page.name }}</h1>
+<div class="m-content text-body">{{ page.body|safe }}</div>
+
+{% endblock %}

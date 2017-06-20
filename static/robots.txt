@@ -1,0 +1,5 @@
+User-Agent: *
+Disallow: /admin
+Disallow: /order
+Disallow: /payment
+Host: https://teaguru.me

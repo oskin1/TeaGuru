@@ -1,0 +1,331 @@
+h1.c-title{
+    color: #222;
+    padding: 20px 0 10px 0;
+    background: #fff;
+}
+.product-filter {
+    margin: 0 0 18px 0;
+    height: 28px;
+    padding: 0 5px;
+}
+.catalog{
+    padding-top: 10px;
+    letter-spacing: 0;
+}
+.pagin a{
+    padding: 0 7px;
+}
+.pagination{
+    padding-top: 12px;
+}
+.pn{
+    width: 48%;
+    float: left;
+    display: block;
+    margin: 12px 1%;
+    border-radius: 3px;
+    padding: 4px 18px;
+    background: #DBDBDB;
+    font-size: 15pt;
+    color: #6a6a6a;
+    line-height: 45px;
+    text-align: center;
+}
+.pn.active{
+    background: #4c4c4c;
+    color: #f5f5f5;
+}
+.sort span, .filter-box .heading span, .limit span, .pagin span{
+    margin-right: 12px;
+    font-weight: 800;   
+    font-size: 10pt;
+    font-family: 'Stem';
+}
+.pagin a:hover{
+    background: #DBDBDB
+}
+.sort a:hover, .limit a:hover{
+    background: rgba(230, 177, 177, 0.2);
+}
+.pagin a.active{
+    background: #5E6364;
+    color: #FFF    
+}
+.sort a.active, .limit a.active{
+    background: rgba(230, 177, 177, 0.4);
+    color: #111;
+}
+.sort a:last-child:not(.active) {
+    margin-right: -12px;
+}
+.filters{
+    padding-top: 23px;
+    border-top: 1px solid #dcdcdc;
+}
+.filter-box{
+    margin-bottom: 23px; 
+}
+.filter-box:not(:first-child){
+    border-top: 1px solid #dcdcdc;
+}
+.filter-box .heading{
+    padding-bottom: 15px;
+}
+.filter-box:not(:first-child) .heading{
+    padding-top: 23px;
+}
+.filter-box .heading span{
+    font-size: 16pt;
+    color: #222;
+}
+.filter-box .option{
+    padding: 8px 0;
+}
+.filter-box input[type='checkbox']{
+    display: none;
+}
+.filter-box input[type='radio']:checked+label:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    display: block;
+    width: 11px;
+    height: 11px;
+    margin: 2px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background: transparent
+}
+
+.filter-box input[type='checkbox']+label {
+    padding-left: 30px;
+    font-size: 15pt;
+    line-height: 18px;
+    text-transform: capitalize;
+}
+
+.filter-box input[type='checkbox']+label:before {
+    content: '';
+    display: block;
+    background: #DBDBDB;
+    border-radius: 2px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: none;
+    margin: 0;
+    box-shadow: none !important;
+}
+.product-box{
+    float: left;
+    width: 50%;
+    height: 240px;
+    position: relative;
+}
+@media screen and (max-width: 1280px) {
+    .product-box{
+        height: 260px;
+    }  
+}
+.product-box .product {
+    margin: 0;
+    padding: 5px;
+    background-color: #f2f2f2;
+    transition: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 3px;
+    text-align: center
+}
+.product-box h1{
+    text-align: center;
+    font-size: 12pt;
+    color: #222;
+    padding-top: 10px;
+}
+.pricing{
+    padding: 5px 0 15px 0;
+}
+.product-box p.price{
+    display: inline-block;
+    padding: 0 3px;
+    font-size: 12pt;
+    color: #000;
+}
+p.netto{
+    font-size: 10pt;
+    color: #444;
+}
+p.price.old{
+    color: #A6A6A6;
+    text-decoration: line-through;
+}
+.product-box p.brief{
+    font-family: 'PT Sans', Arial;
+    font-weight: 500;
+    font-size: 8pt;
+    color: #444;
+    margin-top: 3px;
+}
+.product img{
+    border-radius: 3px;
+    width: 100%;
+}
+.product .p-img{
+    border-radius: 3px;
+    width: 100%;
+    height: 180px;
+    background-size: cover;
+}
+@media screen and (max-width: 1280px){
+    .product .p-img{
+        height: 140px;
+    }    
+}
+.product .subm{
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-family: 'Stem';
+    font-size: 10pt;
+    text-transform: lowercase;
+    line-height: 16px;    
+    opacity: 0;
+    transition: all ease 0.1s;
+    background: #ecd6d6;
+    color: #501b1b;
+}
+.product .select{
+    opacity: 0;
+    transition: all ease 0.1s;
+}
+.product label{
+    display: none;
+}
+.product-box .product:hover .subm, .product-box .product:hover .select{
+    opacity: 1;
+}
+.current{
+    display: inline-block;
+    padding: 0  14px 0 10px;
+    border-radius: 3px;
+    line-height: 32px;
+    background: #dadada;
+    font-size: 11pt;
+}
+.current:after{
+    content: '';
+    float: right;
+    width: 6px;
+    height: 6px;
+    border-top: 1px solid #999;
+    border-right: 1px solid #999;
+    transform: rotate(135deg);
+    margin: 12px 0px 0 10px; 
+}
+#product-list{
+    transition: opacity ease 0.2s;
+}
+.unav{
+    opacity: 0.6;
+}
+select {
+    font-family: "PT Sans", Tahoma, Serif, Arial;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0px;
+    border: 2px solid #BDBDBD;
+    padding: 5px 26px 5px 10px;
+    font-size: 12px;
+    color: #616161;
+    text-transform: uppercase;
+    background: url(/catalog/view/theme/mobile/i/select-arrow.gif) no-repeat right 6px;
+    background-size: 30px 25px;
+    width: 100%;
+    height: 42px
+}
+
+select.sort {
+    font-size: 10px;
+    padding-left: 6px;
+    height: 28px;
+    background-position: right top
+}
+
+.select {
+    border: 2px solid #BDBDBD;
+    padding: 0 26px 0 6px;
+    max-height: 28px;
+    font-size: 10px;
+    line-height: 24px;
+    color: #616161;
+    text-transform: uppercase;
+    background: url(/catalog/view/theme/mobile/i/select-arrow.gif) no-repeat right top;
+    background-size: 30px 25px
+}
+
+.select select {
+    opacity: 0;
+    width: 1px !important;
+    height: 1px !important;
+    font-size: 0 !important
+}
+
+.select .selected {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden
+}
+.btn-filter {
+    border: 2px solid #BDBDBD;
+    padding: 0 6px;
+    text-align: center;
+    font-size: 10px;
+    line-height: 24px;
+    color: #616161;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: block;
+    margin-left: 9px;
+    max-height: 28px;
+}
+.filter{
+        padding: 16px 10px;
+        width: 100%;
+}
+.ctrl{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 75px;
+    background: #fff;
+    box-shadow: 0 0 2px rgba(0,0,0,0.2);
+    z-index: 1001;
+    padding: 12px;
+}
+.awards{
+    width: 100%;
+    padding: 0 4px;
+}
+.awards .award{
+    display: inline-block;
+    background-position: 4px center;
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    border-radius: 3px;
+    margin: 0 4px 4px 0;
+    padding: 0 4px;
+    color: #fff;
+    font-size: 7pt;
+    line-height: 16px;
+    text-transform: uppercase;
+}

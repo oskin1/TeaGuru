@@ -1,0 +1,515 @@
+.card-box{
+    margin-top: 25px;
+    border-top: 1px solid #dcdcdc;
+    padding-top: 20px;
+}
+.card-box .info .h-info{
+    float: left;
+    max-width: 64%;
+}
+.h-info p{
+    font-size: 16pt;
+}
+.h-info h1{
+    line-height: 28pt;
+    font-size: 26pt;
+    margin-bottom: 4px;    
+}
+.awards{
+    width: 100%;
+    margin-bottom: 14px;
+}
+.awards .award{
+    display: inline-block;
+    border: 1px solid green;
+    background-position: 4px center;
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    border-radius: 3px;
+    margin: 0 4px 4px 0;
+    padding: 0 6px;
+    color: #fff;
+    font-size: 8pt;
+    line-height: 20px;
+    text-transform: uppercase;
+}
+h3{
+    font-size: 24pt;
+    padding-bottom: 22px;    
+}
+.card-box .info .p-info{
+    position: absolute;
+    top: 0;
+    right: 0;
+    float: right;
+    text-align: right;
+}
+.card-box .info .price{
+    font-size: 24pt;
+    font-weight: 800;
+    color: #da2525;
+    line-height: 22px;
+}
+@media screen and (max-width: 1280px) {
+    .card-box .info .price{
+        font-size: 20pt;
+    }    
+}
+.card-box .info span{
+    display: inline-block;
+}
+.card-box .info .price-old{
+    font-size: 15pt;
+    color: #b3b3b3;
+    background-size: 100% 1px;
+    background-position: 0 10px;   
+    margin-right: 6px; 
+}
+.info span.netto{
+    color: #222;    
+}
+.info .badge{
+    position: absolute;
+    bottom: 0;
+    right: 0;    
+    padding: 4px 9px 4px 0px;
+    border-radius: 3px;
+    border: 1px solid #5E6364;
+    text-align: center;
+}
+.badge.ok{
+    color: forestgreen;
+    border-color: forestgreen;
+}
+.badge.err{
+    color: darkred;
+    border-color: darkred;
+}
+.rating-box{
+    margin-top: 24px;
+}
+.rating-box i{
+    margin: 0 2px 0 0;
+    font-size: 18px;
+}
+.rating-box i.fa-star{
+    color: #fec42d;
+}
+.card-box .p-attrs{
+    height: 55px;
+    overflow: hidden;
+    border-radius: 3px;
+    background: #dadada;
+    transition: all ease 0.2s;
+}
+.card-box .p-attrs *:not(.do-open):not(.fa-angle-down){
+    display: none;
+}
+.p-attrs .caption{
+    padding: 12px;
+    margin: 7px 0;
+    transition: color ease-out 0.1s;
+}
+.p-attrs .caption:hover{
+    color: #222;
+}
+.p-attrs.opened{
+    height: auto;
+    overflow: visible;
+    background: transparent;
+}
+.p-attrs.opened *:not(.do-open):not(.fa-angle-down){
+    display: inline-block;
+}
+.p-attrs.opened .do-open{
+    display: none;
+} 
+.card-box .p-options{
+    padding: 20px 30px 20px 30px;
+    margin: 20px 0 3px 0;
+    background: #ece0e0;
+    color: black;
+    line-height: 36px;
+    border-radius: 3px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    min-height: 100px;
+}
+.card-box .bullets{
+    padding: 14px 30px 14px 30px;
+    margin: 0 0 20px 0;
+    min-height: 10px !important;
+    border-radius: 3px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.bullets .bullet{
+    display: inline-block;
+    line-height: 22px;
+    text-decoration: underline;
+    font-size: 9pt;
+    margin-right: 10px;
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    cursor: default;
+}
+.bullet i{
+    font-size: 16px;
+}
+.add label{
+    display: none;
+}
+.select{
+    width: 100px;
+}
+.select__gap{
+    background: #fff;
+    padding: 20px;
+    text-align: left;  
+    font-size: 11pt;  
+}
+.select__list {
+    background: #fff;
+    margin: -160px 0 0 0;
+    border-radius: 3px;
+    max-height: 320px;
+    overflow-y: auto;
+    box-shadow: 0 5px 26px 0px rgba(0,0,0,0.2);
+}
+.select__item span {
+    width: 100px;
+    padding: 5px 9px;
+    cursor: pointer;
+    color: #333;
+}
+.select__item:hover span {
+    background: rgba(230, 177, 177, 0.18);
+}
+.p-options form{
+    width: 100%;
+    text-align: left;
+}
+.p-options > form > p{
+    line-height: 18pt;
+    font-size: 13pt;
+    margin-bottom: 15px;
+    font-family: 'Stem';
+}
+.subm, .d-subm{
+    width: 300px;
+    float: right;
+    font-family: 'Stem';
+    font-size: 13pt;
+    padding: 12px;
+    line-height: 17pt;
+    border-radius: 3px;
+    background: #ea0505;
+    color: #f1f1f1;
+    box-shadow: 0 16px 38px -12px rgba(195, 0, 0, 0.6), 
+                0 4px 25px 0px rgba(73, 2, 2, 0.12), 
+                0 8px 10px -5px rgba(116, 0, 0, 0.2);
+    transition: all ease 0.15s;
+}
+@media screen and (max-width: 1280px) {
+    .subm, .d-subm{
+        width: 225px;
+    }    
+}
+.subm span{
+    border-bottom: 1px dashed #dadaad;
+}
+.subm:hover{
+    box-shadow: none;
+}
+.subm.added{
+    background: #228b22;
+    box-shadow: 0 4px 21px 0px rgba(34,139,34,0.5);
+}
+.d-subm{
+    background: #d3d3d3;
+    box-shadow: none;
+}
+.full-image{
+    width: 100%;
+    height: 440px;
+    background-size: cover;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+}
+.full-image img{
+    margin: 0 auto;
+    display: block;
+    position: absolute;
+}
+@media screen and (max-width: 1280px) {
+    .full-image{
+        height: 380px;
+    }   
+}
+.previews{
+    margin-top: 20px;
+    text-align: center;
+}
+.previews .img{
+    display: inline-block;
+    width: 120px;
+    height: 80px;
+    border: 2px solid #d6d6d6;
+    transition: all ease 0.15s;
+    cursor: pointer;
+    background-size: cover;
+}
+.previews .img:hover, .img.active{
+    border: 2px solid #8c8c8c;
+}
+.previews .img:not(::first-child){
+    margin-left: 10px;
+}
+.card-box .attr-box{
+    padding: 15px 0;
+    border-top: 1px solid #dcdcdc;
+}
+.attr-box span{
+    font-size: 13pt;
+    color: #111;
+    font-weight: 800;
+    line-height: 13pt;
+}
+.attr-box p{
+    line-height: 13pt;
+}
+.attr-box:last-child{
+    border-bottom: none;
+}
+.tags p{
+    display: inline-block;
+    padding: 4px 8px 5px 8px;
+    border-radius: 3px;
+    background: #cccccc;
+    margin: 3px 0;
+    color: #fff;
+    font-family: 'PT Sans';
+    font-size: 11pt;
+}
+.tags p:not(:last-child){
+    margin-right: 4px;
+}
+.tags .tc{
+    margin-top: -6px;
+}
+.product-card-info, .related{
+    width: 100%;
+    margin: 25px 0 0 0;
+    background: #fff;
+    min-height: 340px;
+    padding-bottom: 75px;
+}
+.related{
+    margin: 0;
+    min-height: 100px;
+}
+.product-card-info .tabs {
+    list-style: none;
+    position: relative;
+    font-size: 0;
+    text-align: center;
+    border-bottom: 1px solid #dedede;
+    width: 100%
+}
+
+.product-card-info .tabs>li {
+    display: inline-block;
+    font-size: 15px;
+    line-height: 15px;
+    padding: 15px 24px;
+    cursor: default;
+    color: #a3a3a3
+}
+
+.product-card-info .tabs>li:hover:not(.active) {
+    color: #8d867f;
+    background-color: rgba(230, 177, 177, 0.18);;
+    cursor: pointer
+}
+
+.product-card-info .tabs>li.active {
+    color: black;
+    box-shadow: inset 0 -2px 0 0 #f40000 !important;
+}
+
+.product-card-info .tabs .ripple {
+    width: 1px;
+    height: 4px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #ff6c00;
+    transition: left .2s, width .2s
+}
+
+.product-card-info .texts {
+    min-height: 250px;
+    padding: 20px 0
+}
+
+.product-card-info .texts .text {
+    position: relative
+}
+
+.product-card-info .texts .text .h2,.product-card-info .texts .text h1,.product-card-info .texts .text .relh {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 20px 0 0 0;
+    padding: 0;
+    text-transform: none
+}
+
+.product-card-info .texts .text .h2:first-child,.product-card-info .texts .text h1:first-child,.product-card-info .texts .text .relh:first-child {
+    margin: 0
+}
+
+.product-card-info .texts .text p {
+    padding: 4px 0;
+    margin: 0;
+    line-height: 24px
+}
+
+.product-card-info .texts .text a {
+    color: #0084ff;
+    text-decoration: underline
+}
+
+.product-card-info .texts .text a:hover {
+    color: #ff6c00
+}
+
+.product-card-info .texts .text ul {
+    margin: 0;
+    padding: 0;
+    list-style: none
+}
+
+.product-card-info .texts .text li {
+    padding: 4px 0 4px 18px;
+    list-style: none;
+    line-height: 20px;
+    position: relative
+}
+
+.product-card-info .texts .text li:before {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    display: block;
+    content: '\2014'
+}
+.product-card-info .instr{
+    margin-top: 45px;
+    padding: 14px 18px 16px 18px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top: 1px solid #dedede;
+    background: rgba(230, 177, 177, 0.18);
+}
+.instr .step{
+    width: 30%;
+    margin-right: 5%;
+    text-align: center;
+}
+.instr .step:last-child{
+    margin-right: 0;
+}
+.step img{
+    width: 50%;
+    margin: 0 25%
+}
+.step p{
+    font-size: 14pt !important;
+}
+.product-box{
+    float: left;
+    width: 25%;
+    height: 370px;
+    position: relative;
+}
+@media screen and (max-width: 1280px) {
+    .product-box{
+        height: 325px;
+    }  
+}
+.product-box .product {
+    margin: 0;
+    padding: 12px;
+    background-color: #fff;
+    transition: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    border-radius: 3px;
+}
+.product-box h1{
+    font-size: 18pt;
+    color: #222;
+    padding-top: 10px;
+}
+.pricing{
+    padding: 5px 0 15px 0;
+}
+.product-box p.price{
+    display: inline-block;
+    padding: 0 3px;
+    font-size: 16pt;
+    color: #000;
+}
+p.netto{
+    font-size: 11pt;
+    color: #444;
+}
+p.price.old{
+    color: #A6A6A6;
+    text-decoration: line-through;
+}
+.product-box p.brief{
+    font-family: 'Stem';
+    font-weight: 500;
+    font-size: 10pt;
+    color: #444;
+    margin-top: 8px;
+}
+.product img{
+    border-radius: 3px;
+    width: 100%;
+}
+.product .p-img{
+    border-radius: 3px;
+    width: 100%;
+    height: 210px;
+    background-size: cover;
+}
+@media screen and (max-width: 1280px){
+    .product .p-img{
+        height: 170px;
+    }    
+}
+.product .subm{
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-family: 'Stem';
+    font-size: 10pt;
+    text-transform: lowercase;
+    line-height: 16px;    
+    opacity: 0;
+    transition: all ease 0.1s;
+    background: #ecd6d6;
+    color: #501b1b;
+}
+.product .select{
+    opacity: 0;
+    transition: all ease 0.1s;
+}
+.product label{
+    display: none;
+}

@@ -1,0 +1,11 @@
+{% extends 'mobile/generic.html' %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_category.css"/>
+{% endblock %}
+{% block content %}
+
+<h1 class="c-title center" style="font-size: 22pt;">{{ page.name }}</h1>
+<div class="m-content text-body">{{ page.body|safe }}</div>
+
+{% endblock %}

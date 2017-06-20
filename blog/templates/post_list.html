@@ -1,0 +1,37 @@
+{% extends 'generic.html' %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_blog.css"/>
+{% endblock %}
+{% block content %}
+<div class="m-content center">
+    <div class="breadcrumb">
+		<div>
+			<a href="{% url 'teashop:Index' %}" class="underline">Главная</a>
+		</div>
+		<div>
+			<a class="now">Блог</a>
+		</div>
+    </div>
+</div>
+<div class="m-content blog">
+    <h2>Интересные категории</h2>
+    <div class="tags">
+    {% for t in tags %}
+    <a class="tag stem center" href="/blog?tag_filter={{ t.id }}">{{ t.name }}</a>
+    {% endfor %}
+    </div>
+    {% for p in posts %}
+    <a href="{% url 'blog:PostDetail' p.slug %}">
+    <div class="post">
+        <div class="img" style="background-image:url('/media/{{ p.preview }}')">
+            <div class="ovr"><p class="stem">Читать</p></div>
+        </div>
+        <span class="stem">{{ p.pub_date }}</span>
+        <h2>{{ p.title }}</h2>
+        <p class="stem">{{ p.teaser }}</p>
+    </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

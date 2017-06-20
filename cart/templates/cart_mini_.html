@@ -1,0 +1,36 @@
+{% if cart|length > 0 %}
+    <i class="fa fa-shopping-bag" aria-hidden="true" style="font-size: 18px;"></i><a>корзина</a><a id="counter">{{ cart.get_total_quantity }}</a>
+    <div id="minicart" class="tooltip pushright">
+        <div class="content-box">
+            {% for item in cart %}
+                {% with prod=item.product %} 
+                    <div class="item" data-prod-id="{{ prod.id }}">
+                        <div class="delete">
+                            <form style="display:none">
+                            {% csrf_token %}
+                            </form>
+                        </div>
+                        <a href="{% url 'teashop:ProductIntView' prod.slug %}">
+        					{% for i in prod.images.all|slice:':1' %}
+        					<div class="img" style="background-image:url(/media/{{ i.image }})"></div>
+        					{% endfor %}
+                        </a>
+                        <h2>{{ prod.name }}</h2>
+                        <p>{{ item.quantity }}{% if prod.unit == 'wt' %}шт.{% else %}гр.{% endif %}</p>
+                        <p>{{ item.total_price|floatformat:2 }} {{ common.currency }}</p>
+                    </div>
+                {% endwith %}
+            {% endfor %} 
+        </div>
+        <div class="total">
+            <span>Сумма заказа:</span></br>
+            <p class="price">{{ cart.get_total_price|floatformat:2 }} {{ common.currency }}</p>
+            <a href="{% url 'cart:CartDetail' %}" class="cart-button">Оформить заказ</a>
+        </div>                   
+    </div>
+{% else %}
+    <i class="fa fa-shopping-bag" aria-hidden="true" style="font-size: 18px;"></i><a>корзина</a><a id="counter">0</a>
+    <div id="minicart" class="tooltip pushright">
+        <div class="empty"><p>Ваша корзина пуста</p></div>
+    </div>
+{% endif %}

@@ -1,0 +1,90 @@
+.blog{
+    padding: 0;
+    padding-top: 45px;
+}
+.content{
+    background: #fff;
+}
+.tags{
+    padding: 12px;
+    margin-bottom: 22px;
+}
+.tags .tag{
+    display: inline-block;
+    padding: 4px 6px;
+    margin-right: 4px;
+    border-radius: 2px;
+    background: rgba(230, 177, 177, 0.18);
+    color: #444;
+}
+h2{
+    font-size: 20pt;
+    padding: 0 12px;
+}
+.post{
+    float: left;
+    width: calc(33.333% - 24px);
+    height: 400px;
+    margin: 0 12px 24px 12px;
+    color: #444;
+}
+.post span{
+    display: block;
+    margin-top: 12px;
+}
+.post h2{
+    padding: 8px 0 4px 0;
+    font-size: 20pt;
+    color: #111;
+}
+.post .img{
+    background-size: cover;
+    width: 100%;
+    height: 240px;
+}
+.post .img div{
+    width: 100%;
+    height: 100%;
+    padding-top: 108px;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: opacity ease 0.15s;
+}
+.post:hover .img div{
+    opacity: 1;
+}
+.post .img div p{
+    text-align: center;
+    font-size: 14pt;
+    color: #fff;
+}
+.read-area{
+    width: 60%;
+    margin: 0 20%;
+    margin-top: -260px;
+    background: #fff;
+    padding: 40px 45px;
+}
+.read-area span{
+    display: block;
+    margin: 4px 0;
+}
+span.date{
+    color: #777;
+    font-size: 11pt;
+    margin: 0 0 24px 0;
+}
+.text-body{
+    font-family: "Proxima Nova", Tahoma, Serif, Arial;
+}
+.text-body p{
+    margin-bottom: 12px;
+    font-family: "Proxima Nova", Tahoma, Serif, Arial;
+    font-size: 12pt;
+}
+.preview{
+    width: calc(100% - 20px);
+    height: 500px;
+    background-size: cover;
+    margin: 0 10px;
+}

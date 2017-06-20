@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url "admin:index" %}">Главная</a> &rsaquo;
+  <a href="{% url "admin:teashop_product_changelist" %}">Продукты</a> &rsaquo;
+  Импорт
+</div>
+{% endblock %}
+
+{% block content %}
+    <h1>{{header}}</h1>
+
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+
+    <form action="" enctype="multipart/form-data"  method="post">
+        <table>
+            {{ form.as_table }}
+        </table>
+        {% csrf_token %}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

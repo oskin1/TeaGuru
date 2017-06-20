@@ -1,0 +1,146 @@
+{% extends 'generic.html' %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_category.css"/>
+{% endblock %}
+{% block content %}
+
+<div class="m-content center">
+    <div class="breadcrumb">
+		<div>
+			<a href="{% url 'teashop:Index' %}" class="underline">Главная</a>
+		</div>
+		<div>
+			<a class="now">Поиск</a>
+		</div>
+    </div>
+</div>
+<h1 class="c-title center">Результаты поиска</h1>
+
+<div class="m-content search-results">
+	<div class="controls col-100">
+		<div class="right-col col-100">
+			<div class="limit stem">
+				<span>Выводить:</span>
+				<div class="selector">
+        			<div class="current" style="width: 120px;">
+        			    30 товаров
+        			</div>
+        			<div class="sel" style="width: 120px;">
+        				<a class="lim active" data-limit="30">30 товаров</a>
+        				<a class="lim" data-limit="60">60 товаров</a>
+        				<a class="lim" data-limit="90">90 товаров</a>
+    				</div>
+				</div>
+			</div>
+			<div class="sort stem">
+				<span>Сортировать:</span>
+				<div class="selector">
+        			<div class="current" style="width: 170px;">
+        			    По умолчанию
+        			</div>
+        			<div class="sel" style="width: 170px;">
+                		<a class="ctrl active" href="">По умолчанию</a>
+                		<a class="ctrl" data-sort="price" data-order="DESC"
+                		href="?sort=price&order=DESC">
+                			Убыванию цены
+                		</a>
+                		<a class="ctrl"  data-sort="price" data-order="ASC"
+                		href="?sort=price&order=ASC">
+                			Возрастанию цены
+                		</a>
+    				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="goods search-view col-100" {% if message %}style="padding-bottom: 45px"{% endif %}>
+		<div id="product-list" data-filter="off" data-query="{{ query }}">
+    		<div class="right-col col-100">
+                {% if message %}
+            		<div class="search-message center">
+            		    <h3 class="stem center">Поиск по запросу "{{ query }}" не дал результатов. {% if suggestion %}Возможно, вы имели ввиду "{{ suggestion }}".{% endif %}</h3>
+            		    <p class="center">Продукты, которые могли бы Вас заинтересовать:</p>
+            		</div>                
+                {% endif %}
+    			{% for r in results %}
+    			<div class="product-box">
+    				<span data-tag='{{ r.manufacturer.name }}' style="display:none"></span>
+    				<div class="product">
+    					<a href="{% url 'teashop:ProductIntView' r.object.slug %}">
+    					<!--<img src="/media/{{ p.preview }}" class="pvw" />-->
+    					{% for i in r.object.images.all|slice:':1' %}
+    					<div class="p-img pvw" style="background-image:url('/media/{{ i.image }}')">
+                            {% if r.awards %}
+                            <div class="awards taleft">
+                                {% for a in r.awards.all %}
+                                <div class="award stem center" itemprop="award" style="background-color:{{ a.color }};">{{ a.name }}</div>
+                                {% endfor %}
+                            </div>
+                            {% endif %} 
+    					</div>
+    					{% endfor %}
+    					<h2>{{ r.name }}</h2></a>
+    					<p class="brief">{{ r.brief }}</p>
+    					<div class="pricing center">
+    						{% if r.object.price_discounted %}
+    						<p class="price old">{{ r.object.get_full_price|floatformat }}</p>
+    						<p class="price">{{ r.object.get_full_discount|floatformat }} {{ common.currency }}</p>
+    						{% else %}
+    						<p class="price">{{ r.object.get_full_price|floatformat }} {{ common.currency }}</p>
+    						{% endif %}
+    						<p class="netto center">за {{ r.object.netto }}{{ r.object.unit }}</p>
+    					</div>
+    					<form action="{% url 'cart:CartAdd' r.object.id %}" method="post" class="add">
+    						{% if r.object.unit == 'wt' %}
+    						{{ cart_product_form_1 }}
+    						{% else %}
+    						{{ cart_product_form_10 }}
+    						{% endif %}
+    						{% csrf_token %}
+    						<button class="subm" type="submit" value="Добавить в корзину">Добавить в корзину</button>
+    					</form>
+    				</div>  
+    			</div>
+    			{% endfor %} 
+    		</div>
+    		{% if not message %}
+    		<div class="pagination col-100">
+    			<div class="pagin stem">
+    				{% if results.has_previous %}
+    				<a class="pn arrow" data-page="{{ results.previous_page_number }}" href="?page={{ results.previous_page_number }}">Назад</a>
+    				{% endif %}
+    				{% for num in results.paginator.page_range %}
+    					{% if num == results.number %}
+    						<a class="pn active"><b>{{ num }}</b></a>
+    					{% else %}
+    						<a class="pn" data-page="{{ num }}" href="?page={{ num }}"> {{ num }}</a>
+    					{% endif %} 
+    				{% endfor %}
+    				{% if results.has_next %}
+    				<a class="pn arrow" data-page="{{ results.next_page_number }}" href="?page={{ results.next_page_number }}">Вперёд</a>
+    				{% endif %}
+    			</div>	
+    		</div>	
+    		{% endif %}
+		</div>
+		    {% if not message %}
+    		<div class="limitation col-23 full">
+    			<div class="limit stem">
+    				<span>Выводить:</span>
+    				<div class="selector">
+            			<div class="current" style="width: 120px;">
+            			    30 товаров
+            			</div>
+            			<div class="sel" style="width: 120px;">
+            				<a class="lim active" data-limit="30">30 товаров</a>
+            				<a class="lim" data-limit="60">60 товаров</a>
+            				<a class="lim" data-limit="90">90 товаров</a>
+        				</div>
+    				</div>
+    			</div>			
+	        </div>
+	        {% endif %}
+	</div>
+	</div>
+{% endblock %}

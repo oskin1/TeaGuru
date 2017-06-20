@@ -1,0 +1,11 @@
+{{ object.name }}
+{{ object.metadata }}
+{{ object.price }}
+{{ object.brief }}
+{{ object.manufacturer }}
+{% for t in object.tag.all %}
+    {{ t.name }}
+{% endfor %}
+{% for c in object.category.all %}
+    {{ c.name }}
+{% endfor %}

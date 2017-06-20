@@ -1,0 +1,377 @@
+{% extends 'generic.html' %}
+
+{% block meta %}
+<meta name="keywords" content="{{ product.metadata }}">
+<meta name="description" content="{{ product.brief }}">
+<!-- OG markup -->
+<meta property="og:locale" content="ru_RU" />
+<meta property="og:type" content="object" />
+<meta property="og:title" content="Купить {{ product.name }} — teaguru.me" />
+<meta property="og:description" content="{{ product.brief }}" />
+<meta property="og:url" content="{{ request.build_absolute_uri }}" />
+<meta property="og:site_name" content="Чайный Гуру" />        
+<!-- /OG markup -->
+{% endblock %}
+{% block title %}
+<title>Купить {{ product.name }} — teaguru.me</title>
+{% endblock %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/_product.css"/>
+{% endblock %}
+{% block content %}
+
+<div class="m-content center">
+    <div class="breadcrumb">
+		<div>
+			<a href="{% url 'teashop:Index' %}" class="underline">Главная</a>
+		</div>
+		{% if category %}
+    		{% if category.level == 1 %}
+    		<div>
+    			<a href="{% url 'teashop:CategoryView' category.slug %}" class="underline">{{ category.name }}</a>
+    		</div>
+    		{% elif category.level == 2 %}	
+    		<div>
+    			<a href="{% url 'teashop:CategoryView' category.parent.slug %}" class="underline">{{ category.parent.name }}</a>
+    		</div>
+    		<div>
+    			<a href="{% url 'teashop:CategoryView' category.slug %}" class="underline">{{ category.name }}</a>
+    		</div>		
+    		{% else %}
+    		<div>
+    			<a href="{% url 'teashop:CategoryView' category.parent.parent.slug %}" class="underline">{{ category.parent.parent.name }}</a>
+    		</div>		
+    		<div>
+    			<a href="{% url 'teashop:CategoryView' category.parent.slug %}" class="underline">{{ category.parent.name }}</a>
+    		</div>
+    		<div>
+    			<a href="{% url 'teashop:CategoryView' category.slug %}" class="underline">{{ category.name }}</a>
+    		</div>
+    		{% endif %}
+	    {% endif %}
+		<div>
+			<a class="now">{{ product.name }}</a>
+		</div>        				
+    </div>
+</div>
+<div class="m-content card-box" itemscope itemtype="http://schema.org/Product">
+    <div class="product-card-main col-100">
+    <div class="col-56">
+        <div id="viewport" class="full-image">
+            {% for i in product.images.all %}
+            <img src="/media/{{ i.image }}" id="{{ i.id }}" width="100%" style="display:none" alt="{{ product.name }}"/>
+            {% endfor %}
+        </div>
+        <div class="previews">
+            {% for i in product.images.all %}
+            <div class="img sm" style="background-image:url('/media/{{ i.image }}')" id="{{ i.id }}"></div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-40 col-offset-4">
+        <div class="info col-100">
+            <div class="h-info">
+                <h1 itemprop="name">{{ product.name }}</h1>
+                <p class="stem" style="font-size:9pt;margin-bottom:6px;">Арт-л: {{ product.articul }}</p>
+                {% if product.awards %}
+                <div class="awards taleft">
+                    {% for a in product.awards.all %}
+                    <div class="award stem center" itemprop="award" style="border-color:{{ a.color }};color:{{ a.color }}">
+                    <i class="fa fa-{{ a.icon }}" aria-hidden="true" style="margin: 0 5px 0 0"></i>
+                    {{ a.name }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <p itemprop="description" style="display:none">{{ product.brief }}</p>
+                <div class='rating-box'>
+                    {% if product.rating is 0 %}
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    {% elif product.rating is 1 %}
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    {% elif product.rating is 2 %}
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    {% elif product.rating is 3 %}
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    {% elif product.rating is 4 %}
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    {% elif product.rating is 5 %}
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    {% endif %}
+                </div>
+            </div>
+            <div itemscope itemtype="http://schema.org/Offer">
+                <div class="p-info">
+                    {% if account.type == 'y' %}
+                        <span class="price" itemprop="price">{{ product.get_opt_price|floatformat }} {{ common.currency }}</span></br>
+                    {% else %}
+                        {% if product.discount %}
+                        <span class="price-old strike">{{ product.get_full_price|floatformat:0 }}</span>
+                        <span class="price" itemprop="price">{{ product.get_full_discount|floatformat:0 }} {{ common.currency }}</span></br>
+                        {% else %}
+                        <span class="price" itemprop="price">{{ product.get_full_price|floatformat:0 }} {{ common.currency }}</span></br>
+                        {% endif %}
+                    {% endif %}
+                    <span class="netto" itemprop="quantity">За {{ product.netto }}{% if product.unit == 'wt' %}шт.{% else %}гр.{% endif %}</span>
+                </div>
+                {% if product.stock %}
+                </br><div class="badge ok"><link itemprop="availability" href="http://schema.org/InStock"/><i class="fa fa-check" aria-hidden="true"></i>В наличии</div>
+                {% else %}
+                </br><div class="badge err"><link itemprop="availability" href="http://schema.org/OutOfStock"/><i class="fa fa-times" aria-hidden="true"></i>Нет в наличии</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="p-options col-100" data-id="{{ product.id }}" data-name="{{ product.name }}" 
+		data-price="{{ product.get_full_price|floatformat:0 }}"
+		data-category="{% for c in product.category.all %}{% if c.level is 1 %}{{ c.name }}{% elif c.level is 2 or 3 %}/{{ c.name }}{% endif %}{% endfor %}">
+            <form action="{% url "cart:CartAdd" product.id %}" method="post" class="add">
+                <p class="sign">Выберите количество:</p>
+                {% if product.unit == 'wt' %}
+                {{ cart_product_form_1 }}
+                {% else %}
+                {{ cart_product_form_10 }}
+                {% endif %}
+                {% csrf_token %}
+                {% if product.stock %}
+                <button class="subm xl" type="submit" value="Добавить в корзину">Добавить в корзину</button>
+                {% else %}
+                <div class="d-subm xl center">Нет в наличии<i class="fa fa-frown-o" aria-hidden="true"></i></div>
+                {% endif %}
+            </form>            
+        </div>
+        <div class="p-options bullets col-100">
+            <p class="bullet stem"><i class="fa fa-gift" aria-hidden="true"></i>Упакуем в лучшем виде</p>
+            <p class="bullet stem"><i class="fa fa-heart" aria-hidden="true"></i>Комплимент от ЧГ при заказе от 100гр.</p>
+        </div>
+        <div id="attr-box" class="p-attrs col-100">
+        <p id="show-all-props" class="caption stem center cp do-open col-100">Показать все свойства<i class="fa fa-angle-down" aria-hidden="true"></i></p>
+        <p id="hide-all-props" class="caption stem center cp do-close col-100">Скрыть все свойства<i class="fa fa-angle-up" aria-hidden="true"></i></p>
+        {% for f in fields.fields %}
+        <div class="attr-box tags col-100">
+            <div class="col-32"><span>{{ f.name }}:</span></div>
+            <div class="col-63 col-offset-5 tc">
+                {% for t in f.tags.all %}
+                <p>{{ t.name }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+    </div>
+</div>
+<div class="product-card-info col-100">
+    <div class="m-content">
+        <div class="col-35 instr">
+            <div class="step left">
+                <img src="/static/img/ins_icon_1.png">
+                <p id="c_time">{{ product.duration }}</p>
+            </div>
+            <div class="step left">
+                <img src="/static/img/ins_icon_2.png">
+                <p id="c_temp">{{ product.temperature }}</p>
+            </div>
+            <div class="step left">
+                <img src="/static/img/ins_icon_3.png">
+                <p id="c_vol">{{ product.volume }}</p>
+            </div>          
+        </div>
+        <div class="col-60 col-offset-5">
+            <ul class="row tabs">
+                <li data-prop="descr" class="active">Описание</li>
+                <li data-prop="deliv" class="">Доставка</li>
+                <li data-prop="payment" class="">Оплата</li>
+                <li data-prop="feedback" class="">Отзывы</li>
+            </ul>
+            <div class="texts stem readable">
+                <div data-prop="descr" class="text">
+                    <p itemprop="description">
+                        {{ product.description|safe }}
+                    </p>
+                </div>
+                <div data-prop="deliv" class="text" style="display: none;">
+
+                    <p><strong>Доставка по Москве (в пределах МКАД):</strong></p>
+                    
+                    <ul>
+                    	<li>
+                    	<p>Курьерская (стоимость 300 рублей, срок &ndash; 2-3 дня с момента заказа).</p>
+                    	</li>
+                    	<li>
+                    	<p>Самовывоз от станций метро Зябликово/Красногвардейская</p>
+                    	</li>
+                    </ul>
+                    
+                    <p><strong>Доставка по России:</strong></p>
+                    
+                    <ul>
+                    	<li>
+                    	<p>Почтой России, наложенным платежом (стоимость 400 рублей, срок &ndash; 7-14 дней с момента заказа)</p>
+                    	</li>
+                    	<li>
+                    	<p>Транспортной компанией &laquo;Деловые линии&raquo; (стоимость и срок зависят от заказа)</p>
+                    	</li>
+                    	<li>
+                    	<p>EMS Почта России (стоимость &ndash; 800 рублей, от 1 до 5 рабочих дней)</p>
+                    	</li>
+                    </ul>
+                    
+                    <h1><strong>Доставка подарков</strong>&nbsp;от вашего имени</h1>
+                    
+                    <p>Мы также можем доставить подарок сразу тому, кому вы планируете его подарить.
+                    Для этого нужно оплатить заказ банковской картой и адрес доставки указать того 
+                    человека, для кого он предназначается. И вы можете делать подарки вашим родным и 
+                    близким из других городов. Заказ придет в ближайшее почтовое отделение.</p>
+                    
+                    <p>Узнать больше вы можете в разделе <a href="{% url 'teashop:InfoPage' 'delivery' %}">доставка</a></p>
+                </div>
+                <div data-prop="payment" class="text" style="display: none;">
+                    <p><strong>Оплатить покупку вы можете любым из перечисленных ниже способов:</strong></p>
+                    
+                    <ul>
+                    	<li>
+                    	<p>наличными курьеру</p>
+                    	</li>
+                    	<li>
+                    	<p>пластиковой картой</p>
+                    	</li>
+                    	<li>
+                    	<p>электронными платежом через любую из систем: Webmoney, Яндекс.Деньги, QIWI кошелек, PayPal</p>
+                    	</li>
+                    	<li>
+                    	<p>наличными при получении&nbsp;на почте</p>
+                    	</li>
+                    </ul>
+                    
+                    <p>Вы можете задать любой интересующий Вас вопрос по чаю, кофе и другим товарам &laquo;Чайного Гуру&raquo; в наших социальных сетях&nbsp;вконтакте&nbsp;и&nbsp;фейсбук, в онлайн-консультанте на сайте или позвонить по телефону:</p>
+                    
+                    <h2>8 495 203 97 95</h2>
+                </div>
+                <div id="vk_comments" data-prop="feedback" class="text" style="display: none;"></div>
+            </div>
+        </div>        
+    </div>
+</div>
+<div class="related col-100">
+    <div class="m-content">
+        <h3 class="center">{% if product.is_bundle %}Товары из набора:{% else %}Вас может заитересовать:{% endif %}</h3>
+        {% for p in product.related_products.all|slice:'4' %}
+    		<div class="product-box">
+    			<div class="product">
+    				<a href="{% url 'teashop:ProductIntView' p.slug %}">
+    				{% for i in p.images.all|slice:':1' %}
+    				<div class="p-img pvw" style="background-image:url('/media/{{ i.image }}')"></div>
+    				{% endfor %}
+    				<h1 class="center">{{ p.name }}</h1></a>
+    				<p class="brief center">{{ p.brief }}</p>
+    				<div class="pricing center">
+    					{% if p.price_discounted %}
+    					<p class="price old">{{ p.get_full_price|floatformat }}</p>
+    					<p class="price">{{ p.get_full_discount|floatformat }} {{ common.currency }}</p>
+    					{% else %}
+    					<p class="price">{{ p.get_full_price|floatformat }} {{ common.currency }}</p>
+    					{% endif %}
+    					<p class="netto">за {{ p.netto }}{% if p.unit == 'wt' %}шт.{% else %}гр.{% endif %}</p>
+    				</div>
+    			</div>  
+    		</div>    
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block innerscript %}
+<script type="text/javascript">
+ VK.Widgets.Comments('vk_comments', {limit: 5, attach: "*"}, '{{ product.id }}');
+</script>
+<script type="text/javascript">
+    function alignImg(){
+        img = $('#viewport img.active').height();
+        vp = $('#viewport').height();     
+        pos = (vp - img)/2;
+        $('#viewport img.active').css('top', pos);
+    }
+	$('#viewport img:first-child').fadeIn(0).addClass('active');
+	$('.img.sm:first-child').addClass('active');
+	alignImg();
+	$('.img.sm').click(function(){
+		id = '#' + $(this).attr('id');
+		$('#viewport img').fadeOut(0).removeClass('active');
+		$(id).fadeIn(0).addClass('active');
+		$('.img.sm').removeClass('active');
+		$(this).addClass('active');
+		alignImg();
+	})
+
+	$('.tabs li').click(function(){
+		prop = $(this).attr('data-prop');
+		$('.texts > div:not([data-prop="'+prop+'"])').fadeOut(0);
+		$('.texts > div[data-prop="'+prop+'"]').fadeIn(0);
+		$('.tabs li').removeClass('active');
+		$(this).addClass('active');
+	})    
+</script>
+<script type="text/javascript">
+    window.dataLayer.push({
+        "ecommerce": {
+            "currencyCode": "RUB",
+            "detail": {
+                "products": [
+                    {
+                        "id": "{{ product.id }}",
+                        "name" : "{{ product.name }}",
+                        "price": {{ product.get_full_price|floatformat:0 }}.00,
+                        "category": "{% for c in product.category.all %}{% if c.level is 1 %}{{ c.name }}{% elif c.level is 2 or 3 %}/{{ c.name }}{% endif %}{% endfor %}",
+                    },
+                ]
+            }
+        }
+    });
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": "{{ product.name }}",
+  "image": "{% for i in product.images.all|slice:'1' %}https://teaguru.me/media/{{ i.image }}{% endfor %}",
+  "description": "{{ product.description|striptags }}",
+  "mpn": "{{ product.articul }}",
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "RUR",
+    "price": "{{ product.get_full_price }}",
+    "priceValidUntil": "2020-11-05",
+    "itemCondition": "http://schema.org/NewCondition",
+    "availability": "http://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "Чайный Гуру"
+    }
+  }
+}
+</script>
+{% endblock %}
